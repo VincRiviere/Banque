@@ -1,0 +1,39 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Edition de compte</title>
+    <style>
+    table, p, h1, li {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    }
+    td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    }
+    tr:nth-child(even) {
+    background-color: #dddddd;
+    }
+    </style>
+</head>
+<body>
+<div>
+    <h1>Edition de compte</h1>
+    <form action="#" th:action="@{/compte/editer}" th:object="${compte}" method="post">
+        <p>numero: <input type="text" th:field="*{numero}" /></p>
+        <p>client:
+            <select th:field="*{client}" >
+                <option th:each="client : ${clients}" th:value="${client.id}" th:text="${client.prenom} + ' ' + ${client.nom}"></option>
+            </select>
+        </p>
+        <p>Decouvert autorisé: <input type="text" th:field="*{decouvertAutorise}" /></p>
+        <input type="hidden" th:field="*{solde}"/>
+        <input type="hidden" th:field="*{id}"/>
+        <p><input type="submit" value="Valider" /><input type="reset" value="Reinitialiser" /></p>
+    </form>
+</div>
+<br/><a href="#" th:href="@{/}">Retour à l'accueil</a>
+</body>
+</html>

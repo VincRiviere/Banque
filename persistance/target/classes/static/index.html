@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title>ma banque</title>
+    </head>
+    <style>
+    table, p, h1, li {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    }
+    td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    }
+    tr:nth-child(even) {
+    background-color: #dddddd;
+    }
+    </style>
+    <body>
+        <h1>ma banque : accueil</h1>
+        <table>
+            <tr><th>action </th></tr>
+            <tr><td><a href="/client/creer">Créer un client</a></td></tr>
+            <tr><td><a href="/client/lister">Liste de tous les clients</a></td></tr>
+            <tr><td><a href="/compte/creer">Créer un compte</a></td></tr>
+            <tr><td><a href="/compte/lister">Liste de tous les comptes</a></td></tr>
+            <tr><td><a href="/banquier/demandes">Traiter les demandes de virement</a></td></tr>
+        </table>
+    </body>
+</html>

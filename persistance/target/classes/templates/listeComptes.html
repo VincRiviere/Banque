@@ -1,0 +1,46 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des comptes</title>
+    <style>
+    table, p, h1, li {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    }
+    td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    }
+    tr:nth-child(even) {
+    background-color: #dddddd;
+    }
+    </style>
+</head>
+<body>
+<h1>Liste des comptes</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Numéro</th>
+        <th>Client</th>
+        <th>Détails</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="compte : ${comptes}">
+        <td th:text="${compte.id}"></td>
+        <td th:text="${compte.numero}"></td>
+        <td th:text="${compte.client.nom} + ' ' + ${compte.client.prenom}"></td>
+        <td><a th:href="@{'/compte/lister/' + ${compte.id}}">Voir détails</a></td>
+    </tr>
+    </tbody>
+</table>
+<br/><a href="#" th:href="@{/compte/creer}">Ajouter un compte</a>
+<br/><a href="#" th:href="@{/}">Retour à l'accueil</a>
+
+</body>
+</html>

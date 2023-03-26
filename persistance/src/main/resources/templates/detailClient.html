@@ -1,0 +1,45 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>client détail</title>
+    <style>
+    table, p, h1, li {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    }
+    td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    }
+    tr:nth-child(even) {
+    background-color: #dddddd;
+    }
+    </style>
+</head>
+<body>
+<div>
+    <h1>Détail du client</h1>
+    <p>Nom : <span th:text="${client.nom}"></span></p>
+    <p>Prénom : <span th:text="${client.prenom}"></span></p>
+    <h2>Liste des comptes :</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Numéro de compte</th>
+            <th>Solde du compte</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="compte : ${client.comptes}">
+            <td th:text="${compte.numero}"></td>
+            <td th:text="${compte.solde}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<p><a th:href="@{/client/editer/{id}(id=${client.id})}">Modifier</a> | <a th:href="@{/client/supprimer/{id}(id=${client.id})}">Supprimer</a></p>
+<br/><a href="#" th:href="@{/}">Retour à l'accueil</a>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Création de client</title>
+    <style>
+    table, p, h1, li {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    }
+    td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    }
+    tr:nth-child(even) {
+    background-color: #dddddd;
+    }
+    </style>
+</head>
+<body>
+<div>
+    <h1>Création de client</h1>
+    <form action="#" th:action="@{/client/creer}" th:object="${client}" method="post">
+        <p>nom: <input type="text" th:field="*{nom}" /></p>
+        <p>prenom: <input type="text" th:field="*{prenom}" /></p>
+        <p><input type="submit" value="Valider" /><input type="reset" value="Annuler" /></p>
+    </form>
+</div>
+<br/><a href="#" th:href="@{/}">Retour à l'accueil</a>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script>
+        function toggleVirementInterneForm() {
+            const ajoutForm = document.getElementById("ajoutForm");
+            ajoutForm.style.display = "none"
+            const retraitForm = document.getElementById("retraitForm");
+            retraitForm.style.display = "none"
+            const virementExterneForm = document.getElementById("virementExterneForm");
+            virementExterneForm.style.display = "none"
+            const virementInterneForm = document.getElementById("virementInterneForm");
+            virementInterneForm.style.display = (virementInterneForm.style.display === "none") ? "block" : "none";
+        }
+        function toggleVirementExterneForm() {
+            const ajoutForm = document.getElementById("ajoutForm");
+            ajoutForm.style.display = "none"
+            const retraitForm = document.getElementById("retraitForm");
+            retraitForm.style.display = "none"
+            const virementInterneForm = document.getElementById("virementInterneForm");
+            virementInterneForm.style.display = "none"
+            const virementExterneForm = document.getElementById("virementExterneForm");
+            virementExterneForm.style.display = (virementExterneForm.style.display === "none") ? "block" : "none";
+        }
+        function toggleRetraitForm() {
+            const ajoutForm = document.getElementById("ajoutForm");
+            ajoutForm.style.display = "none"
+            const virementInterneForm = document.getElementById("virementInterneForm");
+            virementInterneForm.style.display = "none"
+            const virementExterneForm = document.getElementById("virementExterneForm");
+            virementExterneForm.style.display = "none"
+            const retraitForm = document.getElementById("retraitForm");
+            retraitForm.style.display = (retraitForm.style.display === "none") ? "block" : "none";
+        }
+        function toggleAjoutForm() {
+            const retraitForm = document.getElementById("retraitForm");
+            retraitForm.style.display = "none"
+            const virementInterneForm = document.getElementById("virementInterneForm");
+            virementInterneForm.style.display = "none"
+            const virementExterneForm = document.getElementById("virementExterneForm");
+            virementExterneForm.style.display = "none"
+            const ajoutForm = document.getElementById("ajoutForm");
+            ajoutForm.style.display = (ajoutForm.style.display === "none") ? "block" : "none";
+        }
+    </script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Compte</title>
+    <style>
+    table, p, h1, li {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    }
+    td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    }
+    tr:nth-child(even) {
+    background-color: #dddddd;
+    }
+    </style>
+</head>
+<body>
+<h1>Compte</h1>
+<p>Id: <span th:text="${compte.id}"></span></p>
+<p>Numéro: <span th:text="${compte.numero}"></span></p>
+<p>Propriétaire: <span th:text="${compte.client.nom} + ' ' + ${compte.client.prenom}"></span></p>
+<p>Solde : <span th:text="${compte.solde} + ' €'"></span></p>
+<p>Decouvert Autorisé : <span th:text="${compte.decouvertAutorise}"> €</span></p>
+<button onclick="toggleRetraitForm()">Retirer du solde</button><button onclick="toggleAjoutForm()">Ajouter au solde</button><button onclick="toggleVirementInterneForm()">Effectuer un virement interne</button><button onclick="toggleVirementExterneForm()">Effectuer un virement externe</button>
+<br/>
+<div id="virementInterneForm" style="display: none">
+    <form action="/compte/virementInterne" method="post">
+        <input type="hidden" id="compteSourceIdI" name="compteSourceIdI" th:value="${compte.id}" />
+        <div class="form-group">
+            <label for="compteDestIdI">Compte destination :</label>
+            <select id="compteDestIdI" name="compteDestIdI" class="form-control">
+                <option value="">Sélectionner un compte</option>
+                <option th:each="compteD : ${comptes}" th:if="${compteD.id != compte.id}" th:value="${compteD.id}" th:text="${compteD.numero}"></option>
+        </select>
+        </div>
+        <div class="form-group">
+            <label for="montantI">Montant :</label>
+            <input id="montantI" type="number" step="0.01" min="0" class="form-control" name="montantI" />
+        </div>
+        <button type="submit" class="btn btn-primary">Effectuer le virement</button>
+    </form>
+</div>
+<div id="virementExterneForm" style="display: none">
+<form th:action="@{/compte/virementExterne}" method="post">
+    <input type="hidden" id="compteSourceIdE" name="compteSourceIdE" th:value="${compte.id}" />
+    <div class="form-group">
+        <label for="compteDestIdE">Compte destinataire:</label>
+        <select class="form-control" id="compteDestIdE" name="compteDestIdE">
+            <option value="">Sélectionner un compte</option>
+            <option th:each="c : ${allComptes}" th:if="${c.client.id} != ${compte.client.id}" th:value="${c.id}" th:text="${'Compte ' + c.numero + ' (' + c.client.nom + ' ' + c.client.prenom + ')'}"></option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="montantE">Montant:</label>
+        <input type="number" class="form-control" id="montantE" name="montantE" min="0" step="0.01" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Demande de virement</button>
+</form>
+</div>
+<div id="retraitForm" style="display: none">
+    <form method="post" th:action="@{/compte/retrait}">
+        <input type="hidden" id="idR" name="idR" th:value="${compte.id}"/>
+        <label for="montantR">Montant :</label>
+        <input type="number" id="montantR" name="montantR" step="0.01" min="0" required>
+        <button type="submit">Retirer</button>
+    </form>
+</div>
+<div id="ajoutForm" style="display: none">
+    <form method="post" th:action="@{/compte/ajout}">
+        <input type="hidden" id="idA" name="idA" th:value="${compte.id}"/>
+        <label for="montantA">Montant :</label>
+        <input type="number" id="montantA" name="montantA" step="0.01" min="0" required>
+        <button type="submit">Ajouter</button>
+    </form>
+</div>
+<p><a th:href="@{/compte/editer/{id}(id=${compte.id})}">Modifier</a> | <a th:href="@{/compte/supprimer/{id}(id=${compte.id})}">Supprimer</a></p>
+<br/><a href="#" th:href="@{/compte/lister}">Retour à la liste des comptes</a>
+<br/><a href="#" th:href="@{/}">Retour à l'accueil</a>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Liste clients</title>
+    <style>
+    table, p, h1, li {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    }
+    td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    }
+    tr:nth-child(even) {
+    background-color: #dddddd;
+    }
+    </style>
+</head>
+<body>
+<div>
+    <h1>Liste clients</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="client : ${clients}">
+            <td th:text="${client.id}"></td>
+            <td th:text="${client.nom}"></td>
+            <td th:text="${client.prenom}"></td>
+            <td><a th:href="@{'/client/lister/' + ${client.id}}" th:text="détails"></a></td>
+        </tr>
+        </tbody>
+    </table>
+    <br/><a href="#" th:href="@{/client/creer}">Ajouter un client</a>
+    <br/><a href="#" th:href="@{/}">Retour à l'accueil</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Création de client</title>
+    <style>
+    table, p, h1, li {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    }
+    td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    }
+    tr:nth-child(even) {
+    background-color: #dddddd;
+    }
+    </style>
+</head>
+<body>
+<h1>Demandes de virement</h1>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Compte source</th>
+        <th>Compte destination</th>
+        <th>Montant</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="demande : ${demandes}">
+        <td th:text="${demande.compteSource.numero}"></td>
+        <td th:text="${demande.compteDest.numero}"></td>
+        <td th:text="${demande.montant}"></td>
+        <td>
+            <form th:action="@{/banquier/demandes}" method="post">
+                <input type="hidden" id="demandeId" name="demandeId" th:value="${demande.id}" />
+                <button type="submit" class="btn btn-success">Accepter</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<th:block th:if="${soldeInsuffisant}">
+    <div class="alert alert-danger" role="alert">
+        Solde insuffisant pour effectuer le virement externe.
+    </div>
+</th:block>
+<br/><a href="#" th:href="@{/}">Retour à l'accueil</a>
+</body>
+</html>
